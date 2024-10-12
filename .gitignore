@@ -1,0 +1,5 @@
+/terraform/terramodules/.*
+/terraform/terramodules/terraform*
+/terraform/jenkins-master-terraform/.*
+/terraform/jenkins-master-terraform/terraform**
+/terraform/terramodules/connection.pem
