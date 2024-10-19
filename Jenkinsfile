@@ -68,9 +68,13 @@ pipeline {
                         def prometheusIp = readFile('terraform/prometheus_public_ip.txt').trim()
                         def publicIp = readFile('terraform/ec2_public_ip.txt').trim()
                         sh """
-                            scp -i $SSH_KEY prometheus.yml ubuntu@${prometheusIp}:/home/ubuntu/ 
-                            ssh -i $SSH_KEY -o StrictHostKeyChecking=no ubuntu@${prometheusIp} ' sudo mv /home/ubuntu/prometheus.yml /etc/prometheus/prometheus.yml && sudo sed -i 's/publicIp/${publicIp}/g' /etc/prometheus/prometheus.yml && sudo systemctl restart prometheus'
-                        """
+                        scp -i $SSH_KEY prometheus.yml ubuntu@${prometheusIp}:/home/ubuntu/
+                        ssh -i $SSH_KEY -o StrictHostKeyChecking=no ubuntu@${prometheusIp} '
+                        sudo mv /home/ubuntu/prometheus.yml /etc/prometheus/prometheus.yml && \
+                        sudo sed -i "s/publicIp/${publicIp}/g" /etc/prometheus/prometheus.yml && \
+                        sudo systemctl restart prometheus
+                    '
+                """
 
                     }
                 }
@@ -115,7 +119,8 @@ pipeline {
                 slackSend(
                     channel: "final-project",
                     color: "good",
-                    message: "${env.JOB_NAME} is succeeded. Build no. ${env.BUILD_NUMBER} (<https://hub.docker.com/repository/docker/${USER}/todo-app/general|Open the image link>)"
+                    message: "${env.JOB_NAME} is succeeded. Build no. ${env.BUILD_NUMBER} " + 
+                     "(<https://hub.docker.com/repository/docker/${USER}/todo-app/general|Open the image link>)"
                 )
             }
         }
