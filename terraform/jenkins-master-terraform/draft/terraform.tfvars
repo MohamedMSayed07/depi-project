@@ -1,5 +1,0 @@
-# ami = "ami-0e86e20dae9224db8"
-# instance-type = "t2.micro"
-# availability-zone = "us-east-1a"
-# key = "3am"
-# instance-name = "Jenkins-master"
