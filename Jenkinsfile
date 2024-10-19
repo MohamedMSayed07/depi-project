@@ -72,8 +72,7 @@ pipeline {
                         ssh -i $SSH_KEY -o StrictHostKeyChecking=no ubuntu@${prometheusIp} '
                         sudo mv /home/ubuntu/prometheus.yml /etc/prometheus/prometheus.yml && \
                         sudo sed -i "s/publicIp/${publicIp}/g" /etc/prometheus/prometheus.yml && \
-                        sudo systemctl restart prometheus
-                    '
+                        sudo systemctl restart prometheus'
                 """
 
                     }
